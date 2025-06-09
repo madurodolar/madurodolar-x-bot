@@ -1,0 +1,8 @@
+# Python venvs & caches
+venv/
+**/venv/
+*.pyc
+__pycache__/
+
+# dotenv secrets
+.env
