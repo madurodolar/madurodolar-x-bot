@@ -1,0 +1,34 @@
+name: 📈 Tweet daily price
+
+on:
+  schedule:
+    # UTC midnight Caracas ≃ 05:00
+    - cron:  '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install deps
+        run: pip install tweepy requests
+
+      - name: Run tweet script
+        run: python tweet.py
+        env:
+          TW_API_KEY:        ${{ secrets.TW_API_KEY }}
+          TW_API_SECRET:     ${{ secrets.TW_API_SECRET }}
+          TW_ACCESS_TOKEN:   ${{ secrets.TW_ACCESS_TOKEN }}
+          TW_ACCESS_SECRET:  ${{ secrets.TW_ACCESS_SECRET }}
+          TW_BEARER_TOKEN:   ${{ secrets.TW_BEARER_TOKEN }}
