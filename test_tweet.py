@@ -18,17 +18,16 @@ if missing:
     sys.exit(1)
 
 # 4) Try the tweet
-client = tweepy.Client(
-    consumer_key        = os.getenv("TW_API_KEY"),
-    consumer_secret     = os.getenv("TW_API_SECRET"),
-    access_token        = os.getenv("TW_ACCESS_TOKEN"),
-    access_token_secret = os.getenv("TW_ACCESS_SECRET"),
-    wait_on_rate_limit  = True
+auth = tweepy.OAuth1UserHandler(
+    os.getenv("TW_API_KEY"),
+    os.getenv("TW_API_SECRET"),
+    os.getenv("TW_ACCESS_TOKEN"),
+    os.getenv("TW_ACCESS_SECRET")
 )
+api = tweepy.API(auth)
 
 try:
-    resp = client.create_tweet(text="🧪 Test tweet from my bot")
-    print("✅ Tweet sent, id:", resp.data["id"])
+    api.update_status("Hello, world!")
+    print("✅ Tweet sent!")
 except Exception as e:
-    print("❌ Error sending tweet:", e, file=sys.stderr)
-    sys.exit(1)
+    print("❌ Error sending tweet:", e)
