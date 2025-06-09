@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 from dotenv import load_dotenv
-load_dotenv()
+import os, sys, tweepy, requests
+
+# THIS must come before any os.getenv() calls:
+if not load_dotenv():
+    print("⚠️  .env file not loaded!", file=sys.stderr)
+
+
 
 import os, tweepy, sys
 
