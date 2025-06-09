@@ -27,6 +27,8 @@ auth = tweepy.OAuth1UserHandler(
 api = tweepy.API(auth)
 
 try:
+    user = api.verify_credentials()
+    print("Authenticated as:", user.screen_name if user else "None")
     api.update_status("Hello, world!")
     print("✅ Tweet sent!")
 except Exception as e:
