@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from dotenv import load_dotenv
+load_dotenv()     # ← this pulls in TW_API_* from your local .env
 import os
 import tweepy
 import requests
@@ -35,7 +37,9 @@ def tweet(texto: str):
 
 if __name__ == "__main__":
     precio = get_price()
-    if not precio:
-        print("No price, aborting.", file=sys.stderr)
-        sys.exit(1)
+    print("DEBUG: precio =", precio, file=sys.stderr)
+    for name in ("TW_API_KEY","TW_API_SECRET","TW_ACCESS_TOKEN","TW_ACCESS_SECRET","TW_BEARER_TOKEN"):
+        print(f"DEBUG: {name} →", os.getenv(name), file=sys.stderr)
+
     tweet(f"💡 Valor del dólar hoy en Venezuela: {precio} VES #MaduroDolar")
+
